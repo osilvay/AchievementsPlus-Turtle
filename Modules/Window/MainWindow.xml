@@ -1,0 +1,734 @@
+<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://www.blizzard.com/wow/ui/">
+  <GameTooltip name="AchievementsPlusTooltip" inherits="GameTooltipTemplate" parent="UIParent" hidden="true" />
+  <Font name="AchievementTitleFont" font="Fonts\FRIZQT__.TTF" virtual="true">
+    <FontHeight val="14"/>
+    <Color r="1" g="1" b="1" a="0.85"/>
+    <Shadow>
+      <Color r="0" g="0" b="0" a="0.95"/>
+      <Offset x="1" y="-1"/>
+    </Shadow>
+  </Font>
+  <Font name="AchievementDescriptionFont" font="Fonts\FRIZQT__.TTF" virtual="true">
+    <FontHeight val="12"/>
+    <Color r="0.51" g="0.31" b="0.01" a="0.85"/>
+    <Shadow>
+      <Color r="0" g="0" b="0" a="0.95"/>
+      <Offset x="1" y="0"/>
+    </Shadow>
+  </Font>
+  <Font name="AchievementDateFont" font="Fonts\FRIZQT__.TTF" virtual="true">
+    <FontHeight val="10"/>
+    <Color r="0.91" g="0.81" b="0.11" a="0.85"/>
+    <Shadow>
+      <Color r="0" g="0" b="0" a="0.95"/>
+      <Offset x="1" y="-1"/>
+    </Shadow>
+  </Font>
+  <StatusBar name="AchievementProgressBarTemplate" virtual="true">
+    <Size x="212" y="14"/>
+    <Anchors>
+      <Anchor point="CENTER"/>
+    </Anchors>
+    <Layers>
+      <Layer level="BACKGROUND">
+        <Texture name="$parent_Background">
+          <Anchors>
+            <Anchor point="TOPLEFT"/>
+            <Anchor point="BOTTOMRIGHT"/>
+          </Anchors>
+          <Color r="0" g="0" b="0" a=".4"/>
+        </Texture>
+      </Layer>
+      <Layer level="OVERLAY">
+        <FontString name="$parent_Text" inherits="GameFontHighlight" justifyH="RIGHT" text="700/700" parentKey="Text">
+          <Size x="212" y="14"/>
+          <Anchors>
+            <Anchor point="RIGHT">
+              <Offset x="-10" y="0"/>
+            </Anchor>
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_Name" inherits="GameFontNormal" justifyH="LEFT" text="Name" parentKey="Name">
+          <Size x="212" y="14"/>
+          <Anchors>
+            <Anchor point="LEFT">
+              <Offset x="10" y="0"/>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+      <Layer level="ARTWORK">
+        <Texture name="$parent_BorderLeft" parentKey="BorderLeft" file="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-ProgressBar-Border">
+          <Size x="16" y="0"/>
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset x="-8" y="10"/>
+            </Anchor>
+            <Anchor point="BOTTOMLEFT">
+              <Offset x="-8" y="-10"/>
+            </Anchor>
+          </Anchors>
+          <TexCoords left="0" right="0.0625" top="0" bottom="1"/>
+        </Texture>
+        <Texture name="$parent_BorderRight" parentKey="BorderRight" file="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-ProgressBar-Border">
+          <Size x="16" y="0"/>
+          <Anchors>
+            <Anchor point="TOPRIGHT">
+              <Offset x="8" y="10"/>
+            </Anchor>
+            <Anchor point="BOTTOMRIGHT">
+              <Offset x="8" y="-10"/>
+            </Anchor>
+          </Anchors>
+          <TexCoords left="0.9375" right="1" top="0" bottom="1"/>
+        </Texture>
+        <Texture name="$parent_BorderCenter" parentKey="BorderCenter" file="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-ProgressBar-Border">
+          <Size x="16"/>
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset x="8" y="10"/>
+            </Anchor>
+            <Anchor point="BOTTOMRIGHT">
+              <Offset x="-8" y="-10"/>
+            </Anchor>
+          </Anchors>
+          <TexCoords left="0.0625" right="0.9375" top="0" bottom="1"/>
+        </Texture>
+      </Layer>
+    </Layers>
+    <Scripts>
+      <OnLoad>
+        this:SetStatusBarColor(0, .6, 0, 1);
+        this:SetMinMaxValues(0, 100);
+        this:SetValue(100);
+        this:GetStatusBarTexture():SetDrawLayer("BORDER");
+      </OnLoad>
+    </Scripts>
+    <BarTexture file="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-StatusBar"/>
+  </StatusBar>
+  <Frame name="AchievementsPlusCategoryTemplate" virtual="true">
+    <Size x="198" y="32"/>
+    <Layers>
+      <Layer level="BACKGROUND">
+        <Texture name="$parent_Background" parentKey="Background" file="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-Category-Background">
+          <Size x="212" y="32"/>
+          <Anchors>
+            <Anchor point="TOPLEFT"/>
+          </Anchors>
+          <TexCoords left="0.0" right="0.72" top="0.0" bottom="1"/>
+        </Texture>
+      </Layer>
+      <Layer level="OVERLAY">
+        <FontString name="$parent_Label" parentKey="Label" inherits="GameFontNormal" justifyH="LEFT" text="Category Category Category" nonspacewrap="false" maxlines="1">
+          <Size x="148" y="32"/>
+          <Anchors>
+            <Anchor point="LEFT" x="32" y="2">
+              <Offset x="32" y="2"/>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <Button name="$parent_ToggleButton" parentKey="ToggleButton" inherits="UIPanelButtonTemplate">
+        <Size x="18" y="18"/>
+        <Anchors>
+          <Anchor point="LEFT" relativePoint="LEFT">
+            <Offset x="12" y="2"/>
+          </Anchor>
+        </Anchors>
+        <NormalTexture file="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-Plus-Minus">
+          <TexCoords left="0.0" right="0.5" top="0.0" bottom="0.25"/>
+        </NormalTexture>
+        <PushedTexture file="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-Plus-Minus">
+          <TexCoords left="0.0" right="0.5" top="0.0" bottom="0.25"/>
+        </PushedTexture>
+        <HighlightTexture file="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-Plus-Minus">
+          <TexCoords left="0.0" right="0.5" top="0.0" bottom="0.25"/>
+        </HighlightTexture>
+      </Button>
+    </Frames>
+    <Scripts>
+      <OnLoad inherit="prepend">
+        _AP_Categories.initializeCategory(this)
+      </OnLoad>
+      <OnEnter>
+      </OnEnter>
+      <OnLeave>
+      </OnLeave>
+      <OnMouseDown>
+      </OnMouseDown>
+    </Scripts>
+  </Frame>
+  <Frame name="AchievementsPlusSummaryAchievementTemplate" virtual="true">
+    <Size x="446" y="48"/>
+    <Layers>
+      <Layer level="ARTWORK">
+        <Texture name="$parent_Header" file="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-Title">
+          <Size x="426" y="16"/>
+          <Anchors>
+            <Anchor point="TOP">
+              <Offset x="0" y="-5"/>
+            </Anchor>
+          </Anchors>
+          <TexCoords left="0.0" right="1" top="0.0" bottom="0.33"/>
+        </Texture>
+      </Layer>
+      <Layer level="OVERLAY">
+        <FontString name="$parent_Title" inherits="AchievementTitleFont" text="Achievement title" justifyH="CENTER" justifyV="CENTER">
+          <Size x="318" y="16"/>
+          <Anchors>
+            <Anchor point="TOP">
+              <Offset x="0" y="-5"/>
+            </Anchor>
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_Description" inherits="AchievementDescriptionFont" text="Achievement description long long long long long longlong long longlong long longlong long longlong long longlong long longlong long longlong long longlong long longlong long longlong long long" justifyH="CENTER" justifyV="CENTER">
+          <Size x="340" y="16"/>
+          <Anchors>
+            <Anchor point="TOP">
+              <Offset x="0" y="-21"/>
+            </Anchor>
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_Date" inherits="AchievementDateFont" text="12/12/2025" justifyH="CENTER" justifyV="CENTER">
+          <Size x="80" y="16"/>
+          <Anchors>
+            <Anchor point="TOPRIGHT">
+              <Offset x="-45" y="-5"/>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Backdrop edgeFile="Interface\Tooltips\UI-Tooltip-Border" bgFile="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-Parchment-Horizontal">
+      <TexCoords left="0" right="1" top="0" bottom="0.2"/>
+      <BackgroundInsets left="8" right="8" top="8" bottom="8"/>
+      <EdgeSize val="24"/>
+    </Backdrop>
+    <Frames>
+      <Frame name="$parent_Icon" parentKey="Icon" frameStrata="BACKGROUND" enableMouse="false" movable="false" hidden="false">
+        <Size x="40" y="40"/>
+        <Anchors>
+          <Anchor point="LEFT">
+            <Offset x="0" y="-1"/>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="BACKGROUND">
+            <Texture name="$parent_Icon" file="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievements-Icon-Example">
+              <Size x="30" y="30"/>
+              <Anchors>
+                <Anchor point="LEFT">
+                  <Offset  x="11" y="1"/>
+                </Anchor>
+              </Anchors>
+              <TexCoords left="0.0" right="1" top="0.0" bottom="1"/>
+            </Texture>
+          </Layer>
+          <Layer level="OVERLAY">
+            <Texture name="$parent_IconBorder" file="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-Icon-Frame">
+              <Size x="40" y="40"/>
+              <Anchors>
+                <Anchor point="LEFT">
+                  <Offset  x="5" y="2"/>
+                </Anchor>
+              </Anchors>
+              <TexCoords left="0.0" right="0.54" top="0.0" bottom="0.54"/>
+            </Texture>
+          </Layer>
+        </Layers>
+      </Frame>
+      <Frame name="$parent_Shield" parentKey="Shield" frameStrata="BACKGROUND" enableMouse="false" movable="false" hidden="false">
+        <Size x="40" y="40"/>
+        <Anchors>
+          <Anchor point="RIGHT">
+            <Offset x="0" y="-1"/>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="BACKGROUND">
+            <Texture name="$parent_Icon" file="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-Shields">
+              <Size x="40" y="40"/>
+              <Anchors>
+                <Anchor point="RIGHT">
+                  <Offset  x="-11" y="1"/>
+                </Anchor>
+              </Anchors>
+              <TexCoords left="0.0" right="0.5" top="0.0" bottom="0.5"/>
+            </Texture>
+          </Layer>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Points" inherits="GameFontHighlight" text="99" justifyH="CENTER" justifyV="CENTER">
+              <Size x="40" y="40"/>
+              <Anchors>
+                <Anchor point="RIGHT">
+                  <Offset x="-11" y="2"/>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </Frame>
+    </Frames>
+    <Scripts>
+      <OnLoad inherit="prepend">
+        this:SetBackdropBorderColor(0.6, 0.27, 0.02, 0.9);
+      </OnLoad>
+      <OnEnter inherit="prepend">
+        this:SetBackdropBorderColor(1, 1, 1, 1);
+      </OnEnter>
+      <OnLeave inherit="prepend">
+        this:SetBackdropBorderColor(0.6, 0.27, 0.02, 0.9);
+      </OnLeave>
+    </Scripts>
+  </Frame>
+  <Frame name="AchievementsPlusHeaderFrame" frameStrata="BACKGROUND" enableMouse="true" movable="true" parent="UIParent" hidden="false">
+    <Size x="768" y="48"/>
+    <Anchors>
+      <Anchor point="CENTER"/>
+    </Anchors>
+    <Backdrop bgFile="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-Frame-Header" edgeFile="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-Metal-Borde" tile="false">
+      <BackgroundInsets left="3" right="4" top="5" bottom="5"/>
+      <EdgeSize val="28"/>
+    </Backdrop>
+    <Layers>
+      <Layer level="MEDIUM">
+        <FontString name="$parentAddonName" inherits="GameFontNormalLarge" text="|cffe1e1e1Achievements|r |cfff8ff6BPlus|r" justifyH="LEFT" justifyV="CENTER">
+          <Size x="200" y="24"/>
+          <Anchors>
+            <Anchor point="LEFT" relativePoint="LEFT">
+              <Offset x="32" y="0"/>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <Button name="$parent_Icon" inherits="UIPanelButtonTemplate">
+        <Size x="18" y="18"/>
+        <Anchors>
+          <Anchor point="LEFT" relativePoint="LEFT">
+            <Offset x="12" y="0"/>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            AchievementsPlus:OpenDropdownMenu()
+          </OnClick>
+          <OnEnter>
+            AchievementsPlusTooltip:SetOwner(this, "ANCHOR_RIGHT", -(this:GetWidth() / 2), 5)
+            AchievementsPlusTooltip:ClearLines()
+            AchievementsPlusTooltip:SetText(_AP_MainWindow.i18n("Click to open settings"))
+            AchievementsPlusTooltip:Show()
+          </OnEnter>
+          <OnLeave>
+            AchievementsPlusTooltip:Hide()
+          </OnLeave>
+        </Scripts>
+        <NormalTexture file="Interface\AddOns\AchievementsPlus-Turtle\Images\MiniMap\achievementsplus_a">
+          <TexCoords left="0.175" top="0.175" right="0.825" bottom="0.825"/>
+        </NormalTexture>
+        <PushedTexture file="Interface\AddOns\AchievementsPlus-Turtle\Images\MiniMap\achievementsplus_a">
+          <TexCoords left="0.175" top="0.175" right="0.825" bottom="0.825"/>
+        </PushedTexture>
+        <HighlightTexture file="Interface\AddOns\AchievementsPlus-Turtle\Images\MiniMap\achievementsplus">
+          <TexCoords left="0.175" top="0.175" right="0.825" bottom="0.825"/>
+        </HighlightTexture>
+      </Button>
+      <Button name="$parent_CloseButton" inherits="UIPanelButtonTemplate">
+        <Size x="24" y="24"/>
+        <Anchors>
+          <Anchor point="RIGHT" relativePoint="RIGHT">
+            <Offset x="-12" y="0"/>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            _AP_MainWindow.closeMainWindow()
+          </OnClick>
+          <OnEnter>
+            AchievementsPlusTooltip:SetOwner(this, "ANCHOR_LEFT", (this:GetWidth() / 2), 5)
+            AchievementsPlusTooltip:ClearLines()
+            AchievementsPlusTooltip:SetText(_AP_MainWindow.i18n("Close"))
+            AchievementsPlusTooltip:Show()
+          </OnEnter>
+          <OnLeave>
+            AchievementsPlusTooltip:Hide()
+          </OnLeave>
+        </Scripts>
+        <NormalTexture file="Interface\AddOns\AchievementsPlus-Turtle\Images\Icons\close_c">
+          <TexCoords left="0" top="0" right="1" bottom="1"/>
+        </NormalTexture>
+        <PushedTexture file="Interface\AddOns\AchievementsPlus-Turtle\Images\Icons\close">
+          <TexCoords left="0" top="0" right="1" bottom="1"/>
+        </PushedTexture>
+        <DisabledTexture file="Interface\AddOns\AchievementsPlus-Turtle\Images\Icons\close_d">
+          <TexCoords left="0" top="0" right="1" bottom="1"/>
+        </DisabledTexture>
+      </Button>
+    </Frames>
+    <Scripts>
+      <OnLoad>
+        this:SetBackdropColor(0.91, 0.71, 0.11, 0.95)
+        this:SetBackdropBorderColor(0.91, 0.91, 0.91, 0.8)
+      </OnLoad>
+      <OnMouseUp>
+        if ( this.isMoving ) then
+          this:StopMovingOrSizing()
+          this.isMoving = false
+        end
+      </OnMouseUp>
+      <OnMouseDown>
+        if ( ( not this.isLocked ) or ( this.isLocked == 0 ) ) and ( arg1 == "LeftButton" ) then
+          this:StartMoving()
+          this.isMoving = true
+        end
+      </OnMouseDown>
+    </Scripts>
+  </Frame>
+  <Frame name="AchievementsPlusFrame" frameStrata="BACKGROUND" enableMouse="true" parent="AchievementsPlusHeaderFrame" hidden="false">
+    <Size x="768" y="500"/>
+    <Anchors>
+      <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="AchievementsPlusHeaderFrame">
+        <Offset x="0" y="17"/>
+      </Anchor>
+    </Anchors>
+    <Backdrop bgFile="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-Parchment-Horizontal-Desaturated" edgeFile="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-Metal-Borde">
+      <BackgroundInsets left="5" right="5" top="5" bottom="5"/>
+      <EdgeSize val="28"/>
+    </Backdrop>
+    <Layers>
+      <Layer level="MEDIUM">
+      </Layer>
+    </Layers>
+    <Scripts>
+    </Scripts>
+  </Frame>
+  <Frame name="AchievementsPlusCategoriesFrame" frameStrata="BACKGROUND" enableMouse="true" parent="AchievementsPlusFrame" hidden="false">
+    <Size x="256" y="484"/>
+    <Anchors>
+      <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="AchievementsPlusFrame">
+        <Offset x="8" y="-8"/>
+      </Anchor>
+    </Anchors>
+    <Layers>
+      <Layer level="BACKGROUND">
+        <Texture file="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-Parchment">
+          <Size x="242" y="468"/>
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset x="8" y="-8"/>
+            </Anchor>
+          </Anchors>
+          <TexCoords left="0.0" right="0.5" top="0.0" bottom="1"/>
+        </Texture>
+      </Layer>
+      <Layer level="ARTWORK">
+        <Texture file="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-AchievementWatermark">
+          <Size x="204" y="364"/>
+          <Anchors>
+            <Anchor point="BOTTOMLEFT"/>
+          </Anchors>
+          <TexCoords left="0.0" right="0.61" top="0.0" bottom="1"/>
+        </Texture>
+      </Layer>
+    </Layers>
+    <Backdrop edgeFile="Interface\Tooltips\UI-Tooltip-Border">
+      <EdgeSize val="24"/>
+    </Backdrop>
+    <Frames>
+      <ScrollFrame name="$parent_ScrollFrame" inherits="UIPanelScrollFrameTemplate">
+        <Size x="218" y="464"/>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset x="8" y="-10"/>
+          </Anchor>
+        </Anchors>
+        <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" tile="true">
+          <TileSize val="20"/>
+        </Backdrop>
+        <Scripts>
+          <OnLoad>
+            this:SetBackdropColor(1, 1, 1, 0.2)
+        </OnLoad>
+        </Scripts>
+        <ScrollChild>
+          <Frame name="$parent_ScrollChild">
+            <Size x="175" y="500"/>
+            <Frames/>
+          </Frame>
+        </ScrollChild>
+      </ScrollFrame>
+    </Frames>
+    <Scripts>
+      <OnLoad>
+        this:SetBackdropBorderColor(1, 0.675, 0.125, 0.9);
+        _AP_Categories.buildCategoryTree()
+      </OnLoad>
+    </Scripts>
+  </Frame>
+  <Frame name="AchievementsPlusAchievementsFrame" frameStrata="BACKGROUND" enableMouse="true" parent="AchievementsPlusFrame" hidden="false">
+    <Size x="500" y="484"/>
+    <Anchors>
+      <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="AchievementsPlusFrame">
+        <Offset x="260" y="-8"/>
+      </Anchor>
+    </Anchors>
+    <Layers>
+      <Layer level="BACKGROUND">
+        <Texture file="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-Background">
+          <Size x="484" y="468"/>
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset x="8" y="-8"/>
+            </Anchor>
+          </Anchors>
+          <TexCoords left="0.0" right="1" top="0.0" bottom="1"/>
+        </Texture>
+      </Layer>
+      <Layer level="ARTWORK">
+        <Texture name="$parent_RecentHeaderBackground" file="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-Header">
+          <Size x="468" y="32"/>
+          <Anchors>
+            <Anchor point="TOP">
+              <Offset x="0" y="-24"/>
+            </Anchor>
+          </Anchors>
+          <TexCoords left="0.0" right="1" top="0.0" bottom="1"/>
+        </Texture>
+      </Layer>
+      <Layer level="OVERLAY">
+        <FontString name="$parent_RecentHeaderBackgroundText" inherits="GameFontNormal" justifyH="CENTER" text="" nonspacewrap="false" maxlines="1">
+          <Size x="468" y="32"/>
+          <Anchors>
+            <Anchor point="CENTER" relativeTo="$parent_RecentHeaderBackground">
+              <Offset x="0" y="4"/>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+      <Layer level="ARTWORK">
+        <Texture name="$parent_OverviewHeaderBackground" file="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-Header">
+          <Size x="468" y="32"/>
+          <Anchors>
+            <Anchor point="TOP">
+              <Offset x="0" y="-242"/>
+            </Anchor>
+          </Anchors>
+          <TexCoords left="0.0" right="1" top="0.0" bottom="1"/>
+        </Texture>
+      </Layer>
+      <Layer level="OVERLAY">
+        <FontString name="$parent_OverviewHeaderBackgroundText" inherits="GameFontNormal" justifyH="CENTER" text="" nonspacewrap="false" maxlines="1">
+          <Size x="468" y="32"/>
+          <Anchors>
+            <Anchor point="CENTER" relativeTo="$parent_OverviewHeaderBackground">
+              <Offset x="0" y="4"/>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Backdrop edgeFile="Interface\Tooltips\UI-Tooltip-Border">
+      <EdgeSize val="24"/>
+    </Backdrop>
+    <Frames>
+      <Frame name="$parent_RecentFrame" hidden="false">
+        <Size x="468" y="176"/>
+        <Anchors>
+          <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_RecentHeaderBackground">
+            <Offset x="0" y="18"/>
+          </Anchor>
+        </Anchors>
+        <Frames>
+          <Frame name="$parent_RecentAchievement1" inherits="AchievementsPlusSummaryAchievementTemplate">
+            <Anchors>
+              <Anchor point="TOP">
+                <Offset x="0" y="-5"/>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+            </Scripts>
+          </Frame>
+          <Frame name="$parent_RecentAchievement2" inherits="AchievementsPlusSummaryAchievementTemplate">
+            <Anchors>
+              <Anchor point="TOP">
+                <Offset x="0" y="-47"/>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+            </Scripts>
+          </Frame>
+          <Frame name="$parent_RecentAchievement3" inherits="AchievementsPlusSummaryAchievementTemplate">
+            <Anchors>
+              <Anchor point="TOP">
+                <Offset x="0" y="-89"/>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+            </Scripts>
+          </Frame>
+          <Frame name="$parent_RecentAchievement4" inherits="AchievementsPlusSummaryAchievementTemplate">
+            <Anchors>
+              <Anchor point="TOP">
+                <Offset x="0" y="-131"/>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+            </Scripts>
+          </Frame>
+        </Frames>
+      </Frame>
+      <Frame name="$parent_OverviewFrame" hidden="false">
+        <Size x="468" y="192"/>
+        <Anchors>
+          <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_OverviewHeaderBackground">
+            <Offset x="0" y="18"/>
+          </Anchor>
+        </Anchors>
+        <Frames>
+          <StatusBar name="$parent_ProgressBar1" inherits="AchievementProgressBarTemplate">
+            <Size x="420" y="14"/>
+            <Anchors>
+              <Anchor point="TOP">
+                <Offset x="0" y="-12"/>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnShow>
+                getfenv(0)[this:GetName().."_Text"]:SetText("0 / 0")
+                getfenv(0)[this:GetName().."_Name"]:SetText(_AP_MainWindow.i18n("Achievements Earned"))
+              </OnShow>
+            </Scripts>
+          </StatusBar>
+          <!-- Character / Quests -->
+          <StatusBar name="$parent_ProgressBar2" inherits="AchievementProgressBarTemplate">
+            <Size x="200" y="14"/>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_ProgressBar1">
+                <Offset x="0" y="-30"/>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnShow>
+                getfenv(0)[this:GetName().."_Text"]:SetText("0 / 0")
+                getfenv(0)[this:GetName().."_Name"]:SetText(_AP_MainWindow.i18n("Character"))
+              </OnShow>
+            </Scripts>
+          </StatusBar>
+          <StatusBar name="$parent_ProgressBar3" inherits="AchievementProgressBarTemplate">
+            <Size x="200" y="14"/>
+            <Anchors>
+              <Anchor point="TOPRIGHT" relativeTo="$parent_ProgressBar1">
+                <Offset x="0" y="-30"/>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnShow>
+                getfenv(0)[this:GetName().."_Text"]:SetText("0 / 0")
+                getfenv(0)[this:GetName().."_Name"]:SetText(_AP_MainWindow.i18n("Quests"))
+              </OnShow>
+            </Scripts>
+          </StatusBar>
+          <!-- World Exploration / Dungeons and Raids -->
+          <StatusBar name="$parent_ProgressBar4" inherits="AchievementProgressBarTemplate">
+            <Size x="200" y="14"/>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_ProgressBar2">
+                <Offset x="0" y="-30"/>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnShow>
+                getfenv(0)[this:GetName().."_Text"]:SetText("0 / 0")
+                getfenv(0)[this:GetName().."_Name"]:SetText(_AP_MainWindow.i18n("World Exploration"))
+              </OnShow>
+            </Scripts>
+          </StatusBar>
+          <StatusBar name="$parent_ProgressBar5" inherits="AchievementProgressBarTemplate">
+            <Size x="200" y="14"/>
+            <Anchors>
+              <Anchor point="TOPRIGHT" relativeTo="$parent_ProgressBar3">
+                <Offset x="0" y="-30"/>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnShow>
+                getfenv(0)[this:GetName().."_Text"]:SetText("0 / 0")
+                getfenv(0)[this:GetName().."_Name"]:SetText(_AP_MainWindow.i18n("Dungeons and Raids"))
+              </OnShow>
+            </Scripts>
+          </StatusBar>
+          <!-- Player vs Player / Professions -->
+          <StatusBar name="$parent_ProgressBar6" inherits="AchievementProgressBarTemplate">
+            <Size x="200" y="14"/>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_ProgressBar4">
+                <Offset x="0" y="-30"/>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnShow>
+                getfenv(0)[this:GetName().."_Text"]:SetText("0 / 0")
+                getfenv(0)[this:GetName().."_Name"]:SetText(_AP_MainWindow.i18n("Player vs Player"))
+              </OnShow>
+            </Scripts>
+          </StatusBar>
+          <StatusBar name="$parent_ProgressBar7" inherits="AchievementProgressBarTemplate">
+            <Size x="200" y="14"/>
+            <Anchors>
+              <Anchor point="TOPRIGHT" relativeTo="$parent_ProgressBar5">
+                <Offset x="0" y="-30"/>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnShow>
+                getfenv(0)[this:GetName().."_Text"]:SetText("0 / 0")
+                getfenv(0)[this:GetName().."_Name"]:SetText(_AP_MainWindow.i18n("Professions"))
+              </OnShow>
+            </Scripts>
+          </StatusBar>
+          <!-- Reputation / World Events -->
+          <StatusBar name="$parent_ProgressBar8" inherits="AchievementProgressBarTemplate">
+            <Size x="200" y="14"/>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_ProgressBar6">
+                <Offset x="0" y="-30"/>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnShow>
+                getfenv(0)[this:GetName().."_Text"]:SetText("0 / 0")
+                getfenv(0)[this:GetName().."_Name"]:SetText(_AP_MainWindow.i18n("Reputation"))
+              </OnShow>
+            </Scripts>
+          </StatusBar>
+          <StatusBar name="$parent_ProgressBar9" inherits="AchievementProgressBarTemplate">
+            <Size x="200" y="14"/>
+            <Anchors>
+              <Anchor point="TOPRIGHT" relativeTo="$parent_ProgressBar7">
+                <Offset x="0" y="-30"/>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnShow>
+                getfenv(0)[this:GetName().."_Text"]:SetText("0 / 0")
+                getfenv(0)[this:GetName().."_Name"]:SetText(_AP_MainWindow.i18n("World Events"))
+              </OnShow>
+            </Scripts>
+          </StatusBar>
+        </Frames>
+      </Frame>
+    </Frames>
+    <Scripts>
+      <OnLoad>
+        this:SetBackdropBorderColor(1, 0.675, 0.125, 0.9);
+        AchievementsPlusAchievementsFrame_RecentHeaderBackgroundText:SetText("Recent Achievements")
+        AchievementsPlusAchievementsFrame_OverviewHeaderBackgroundText:SetText("Progress Overview")
+      </OnLoad>
+    </Scripts>
+  </Frame>
+</Ui>
