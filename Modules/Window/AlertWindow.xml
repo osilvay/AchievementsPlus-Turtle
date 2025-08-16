@@ -1,0 +1,129 @@
+<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://www.blizzard.com/wow/ui/">
+  <Font name="AlertTitleFont" font="Fonts\FRIZQT__.TTF" virtual="true">
+    <FontHeight val="12"/>
+    <Color r="1" g="1" b="1" a="0.85"/>
+    <Shadow>
+      <Color r="0" g="0" b="0" a="0.95"/>
+      <Offset x="1" y="-1"/>
+    </Shadow>
+  </Font>
+  <Font name="AlertDescriptionFont" font="Fonts\FRIZQT__.TTF" virtual="true">
+    <FontHeight val="12"/>
+    <Color r="0.51" g="0.31" b="0.01" a="0.85"/>
+    <Shadow>
+      <Color r="0" g="0" b="0" a="0.95"/>
+      <Offset x="1" y="0"/>
+    </Shadow>
+  </Font>
+  <Font name="AlertDateFont" font="Fonts\FRIZQT__.TTF" virtual="true">
+    <FontHeight val="10"/>
+    <Color r="0.91" g="0.81" b="0.11" a="0.85"/>
+    <Shadow>
+      <Color r="0" g="0" b="0" a="0.95"/>
+      <Offset x="1" y="-1"/>
+    </Shadow>
+  </Font>
+  <Frame name="CustomAlertTemplate" virtual="true">
+    <Size x="340" y="85"/>
+    <Layers>
+      <Layer level="OVERLAY">
+        <FontString name="$parent_Title" inherits="AlertTitleFont" text="Achievement title title title title title title title title title" maxlines="2">
+          <Size x="140" y="32"/>
+          <Anchors>
+            <Anchor point="LEFT">
+              <Offset x="106" y="-4"/>
+            </Anchor>
+          </Anchors>
+        </FontString>
+        <!--<FontString name="$parent_Description" inherits="AlertDescriptionFont" text="Achievement description long long long long long longlong long longlong long longlong long longlong long longlong long longlong long longlong long longlong long longlong long longlong long long" justifyH="CENTER" justifyV="CENTER">
+          <Size x="340" y="16"/>
+          <Anchors>
+            <Anchor point="TOP">
+              <Offset x="0" y="-21"/>
+            </Anchor>
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_Date" inherits="AlertDateFont" text="12/12/2025" justifyH="CENTER" justifyV="CENTER">
+          <Size x="80" y="16"/>
+          <Anchors>
+            <Anchor point="TOPRIGHT">
+              <Offset x="-45" y="-5"/>
+            </Anchor>
+          </Anchors>
+        </FontString>-->
+      </Layer>
+    </Layers>
+    <Backdrop bgFile="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-Alert-Background">
+      <TexCoords left="0" right="1" top="0" bottom="1"/>
+    </Backdrop>
+    <Frames>
+      <Frame name="$parent_Icon" parentKey="Icon" frameStrata="MEDIUM" enableMouse="false" movable="false" hidden="false">
+        <Size x="54" y="54"/>
+        <Anchors>
+          <Anchor point="LEFT">
+            <Offset x="34" y="-1"/>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="BACKGROUND">
+            <Texture name="$parent_Icon" file="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievements-Icon-Example">
+              <Size x="44" y="44"/>
+              <Anchors>
+                <Anchor point="CENTER">
+                  <Offset  x="6" y="0"/>
+                </Anchor>
+              </Anchors>
+              <TexCoords left="0.0" right="1" top="0.0" bottom="1"/>
+            </Texture>
+          </Layer>
+          <Layer level="OVERLAY">
+            <Texture name="$parent_IconBorder" file="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-Icon-Frame">
+              <Size x="54" y="54"/>
+              <Anchors>
+                <Anchor point="CENTER">
+                  <Offset  x="5" y="2"/>
+                </Anchor>
+              </Anchors>
+              <TexCoords left="0.0" right="0.54" top="0.0" bottom="0.54"/>
+            </Texture>
+          </Layer>
+        </Layers>
+      </Frame>
+      <Frame name="$parent_Shield" parentKey="Shield" frameStrata="MEDIUM" enableMouse="false" movable="false" hidden="false">
+        <Size x="54" y="54"/>
+        <Anchors>
+          <Anchor point="RIGHT">
+            <Offset x="-30" y="-4"/>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="BACKGROUND">
+            <Texture name="$parent_Icon" file="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-Shields">
+              <Size x="54" y="54"/>
+              <Anchors>
+                <Anchor point="RIGHT">
+                  <Offset  x="-11" y="1"/>
+                </Anchor>
+              </Anchors>
+              <TexCoords left="0.0" right="0.5" top="0.0" bottom="0.5"/>
+            </Texture>
+          </Layer>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Points" inherits="GameFontHighlight" text="99" justifyH="CENTER" justifyV="CENTER">
+              <Size x="54" y="54"/>
+              <Anchors>
+                <Anchor point="RIGHT">
+                  <Offset x="-11" y="2"/>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </Frame>
+    </Frames>
+    <Scripts>
+    </Scripts>
+  </Frame>
+</Ui>

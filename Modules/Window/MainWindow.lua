@@ -28,30 +28,13 @@ end
 ---Show main window
 function _AP_MainWindow.showMainWindow()
   PlaySoundFile("Interface\\Addons\\AchievementsPlus-Turtle\\Sounds\\CharacterSheetOpen.ogg", "master")
+  AchievementsPlusHeaderFrameAddonName:SetText(string.format("%s |c%sv%s|r", AchievementsPlus.addonColoredName,
+    AchievementsPlus.versionColor, AchievementsPlus.addonVersion))
   AchievementsPlusHeaderFrame:Show()
 end
 
 function AP_MainWindow:ShowMainWindow()
   if not AchievementsPlusHeaderFrame:IsShown() then
     _AP_MainWindow.showMainWindow()
-  end
-end
-
-local lastX, lastY = 0, 0
-function _AP_MainWindow.isMoving()
-  local x, y = GetPlayerMapPosition("player")
-  if x ~= lastX or y ~= lastY then
-    _AP_MainWindow.playerIsMoving(true)
-  else
-    _AP_MainWindow.playerIsMoving(false)
-  end
-  lastX, lastY = x, y
-end
-
----Player is moving
----@param playerIsMoving boolean
-function _AP_MainWindow.playerIsMoving(playerIsMoving)
-  if playerIsMoving then
-  else
   end
 end

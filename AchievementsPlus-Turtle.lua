@@ -1,7 +1,9 @@
 AchievementsPlus = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceHook-2.1", "AceConsole-2.0", "AceDB-2.0",
   "AceModuleCore-2.0", "AceDebug-2.0", "Metrognome-2.0")
+
 AchievementsPlus.L = AceLibrary("AceLocale-2.2"):new("AchievementsPlus")
 
+AchievementsPlus:RegisterDB("AchievementsPlusDB")
 AchievementsPlus.errorColor = "FFFC6B6B"
 AchievementsPlus.warnColor = "FFFFAD6E"
 AchievementsPlus.infoColor = "FF86C9FC"
@@ -14,16 +16,14 @@ AchievementsPlus.pausedColor = "FFFFE431"
 AchievementsPlus.unknownColor = "FF919191"
 AchievementsPlus.versionColor = "FF619191"
 AchievementsPlus.textColor = "FFe1e1e1"
-
 AchievementsPlus.addonColor = "FFF8FF6B"
 AchievementsPlus.addonName = "AchievementsPlus"
 AchievementsPlus.addonVersion = "0.0.1"
-AchievementsPlus.addonColoredName = string.format("|c%sAchievements|r |c%sPlus|r", "FFe1e1e1", "FFF8FF6B")
+AchievementsPlus.addonColoredName = string.format("|c%sAchievements|r |c%sPlus|r", AchievementsPlus.addonColor, AchievementsPlus.addonColor)
 
-AchievementsPlus:RegisterDB("AchievementsPlusDB")
-AchievementsPlus:RegisterDefaults("profile", {
-  debug = "off"
-})
+function print(message)
+  DEFAULT_CHAT_FRAME:AddMessage(message)
+end
 
 ---Print
 ---@param message string
@@ -33,7 +33,7 @@ function AchievementsPlus:Print(message, withoutHeader)
   if withoutHeader then
     finalMessage = string.format("%s", message)
   else
-    finalMessage = string.format("|c%sDP|r: %s", AchievementsPlus.addonColor, message or "nil")
+    finalMessage = string.format("|c%sAP|r: %s", AchievementsPlus.addonColor, tostring(message))
   end
 
   DEFAULT_CHAT_FRAME:AddMessage(finalMessage)
@@ -144,7 +144,7 @@ end
 
 ---Check debug enabled
 function AchievementsPlus:IsDebugEnabled()
-  if AchievementsPlus.db.profile ~= nil and AchievementsPlus.db.profile.debug == "on" then
+  if _AP_Database.GetCharValue("debug") ~= nil and _AP_Database.GetCharValue("debug") == "on" then
     return true
   end
   return false

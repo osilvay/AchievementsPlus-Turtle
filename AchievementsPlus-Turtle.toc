@@ -3,8 +3,7 @@
 ## Version: Version 0.0.1
 ## Notes: Achievements for Turtle WoW
 ## Author: osilvay
-## SavedVariables: AchievementsPlus_AccountWideDB
-## SavedVariablesPerCharacter: AchievementsPlus_PerCharacterDB
+## SavedVariables: AchievementsPlusDB
 ## OptionalDeps: Ace2, FuBar, FuBarPlugin-2.0, CandyBarLib, CompostLib, DewdropLib, MetrognomeLib, TabletLib
 ## DefaultState: enabled
 ## LoadOnDemand: 0
@@ -23,6 +22,7 @@ Libs\Ace2\AceComm-2.0\AceComm-2.0.lua
 Libs\Ace2\AceAddon-2.0\AceAddon-2.0.lua
 Libs\Ace2\AceModuleCore-2.0\AceModuleCore-2.0.lua
 
+Libs\LibStub\LibStub.lua
 Libs\Compost-2.0\Compost-2.0.lua
 Libs\Dewdrop-2.0\Dewdrop-2.0.lua
 Libs\FuBarPlugin-2.0\FuBarPlugin-2.0.lua
@@ -41,11 +41,12 @@ Locales\Locale_enUS.lua
 # Modules
 Menu.lua
 Modules\EventManager.lua
+Modules\Database\Categories.lua
+Modules\Database\Achievements.lua
+Modules\Database\Summary.lua
 Modules\Window\MainWindow.lua
-Modules\Window\Categories.lua
-Modules\Window\Summary.lua
-Modules\Window\Achievements.lua
 Modules\Window\MainWindow.xml
-
-#Modules\Common\CommonFuncions.lua
-#Modules\Timers.lua
+Modules\Window\AlertWindow.lua
+Modules\Window\AlertWindow.xml
+Modules\Common\CommonFuncions.lua
+Modules\Timers.lua

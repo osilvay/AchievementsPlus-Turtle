@@ -20,8 +20,8 @@ function AchievementsPlusFu:OnClick()
 end
 
 function AchievementsPlusFu:OnTooltipUpdate()
-  tablet:SetTitle(AchievementsPlus.addonColoredName .. " " .. string.format("|c%s%s|r", AchievementsPlus.unknownColor,
-    AchievementsPlus.versionColor .. "|r"))
+  local title = string.format("%s |c%sv%s|r", AchievementsPlus.addonColoredName, AchievementsPlus.versionColor, AchievementsPlus.addonVersion)
+  tablet:SetTitle(title)
   local category = tablet:AddCategory(
     "columns", 2,
     "justify", "LEFT",
@@ -42,7 +42,6 @@ function AchievementsPlusFu:OnTooltipUpdate()
 end
 
 function AchievementsPlusFu:OnMenuRequest(level, value, x, valueN_1, valueN_2, valueN_3, valueN_4)
-  AchievementsPlusFu.updateStatusIcon()
   AchievementsPlusFu.createDDMenu(level, value, true)
   if (level == 1) then
     dewdrop:AddLine()
@@ -68,9 +67,8 @@ end
 
 ---Get addon status
 function AchievementsPlusFu:GetDebug()
-  if not AchievementsPlus.db.profile then return string.format("|c%s%s|r", AchievementsPlus.unknownColor, "-") end
-  if AchievementsPlus.db.profile.debug == nil then AchievementsPlus.db.profile.debug = "off" end
-  if AchievementsPlus.db.profile.debug == "on" then
+  if _AP_Database.GetCharValue("debug") == nil then _AP_Database.SetCharValue("debug", "off") end
+  if _AP_Database.GetCharValue("debug") == "on" then
     return string.format("|c%s%s|r", AchievementsPlus.onColor, "on")
   end
   return string.format("|c%s%s|r", AchievementsPlus.offColor, "off")
@@ -78,11 +76,10 @@ end
 
 ---Change debug mode
 function AchievementsPlusFu.changeDebugMode()
-  if not AchievementsPlus.db.profile then return end
-  if AchievementsPlus.db.profile.debug == nil or AchievementsPlus.db.profile.debug == "on" then
-    AchievementsPlus.db.profile.debug = "off"
-  elseif AchievementsPlus.db.profile.debug == "off" then
-    AchievementsPlus.db.profile.debug = "on"
+  if _AP_Database.GetCharValue("debug") == nil or _AP_Database.GetCharValue("debug") == "on" then
+    _AP_Database.SetCharValue("debug", "off")
+  elseif _AP_Database.GetCharValue("debug") == "off" then
+    _AP_Database.SetCharValue("debug", "on")
   end
 end
 
@@ -97,7 +94,7 @@ function AchievementsPlusFu.getMenu()
   return {
     ["L1"] = {
       {
-        "text", "|cffe1e1e1Achievements|r|cffed6bffPlus|r|cff919191" .. AchievementsPlus.version .. "|r",
+        "text", string.format("%s |c%sv%s|r", AchievementsPlus.addonColoredName, AchievementsPlus.versionColor, AchievementsPlus.addonVersion),
         "isTitle", true
       },
       {},

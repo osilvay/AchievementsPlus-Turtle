@@ -42,7 +42,7 @@
         </Texture>
       </Layer>
       <Layer level="OVERLAY">
-        <FontString name="$parent_Text" inherits="GameFontHighlight" justifyH="RIGHT" text="700/700" parentKey="Text">
+        <FontString name="$parent_Text" inherits="GameFontHighlight" justifyH="RIGHT" text="" parentKey="Text">
           <Size x="212" y="14"/>
           <Anchors>
             <Anchor point="RIGHT">
@@ -50,7 +50,7 @@
             </Anchor>
           </Anchors>
         </FontString>
-        <FontString name="$parent_Name" inherits="GameFontNormal" justifyH="LEFT" text="Name" parentKey="Name">
+        <FontString name="$parent_Name" inherits="GameFontNormal" justifyH="LEFT" text="" parentKey="Name">
           <Size x="212" y="14"/>
           <Anchors>
             <Anchor point="LEFT">
@@ -102,7 +102,7 @@
       <OnLoad>
         this:SetStatusBarColor(0, .6, 0, 1);
         this:SetMinMaxValues(0, 100);
-        this:SetValue(100);
+        this:SetValue(0);
         this:GetStatusBarTexture():SetDrawLayer("BORDER");
       </OnLoad>
     </Scripts>
@@ -372,6 +372,7 @@
     </Frames>
     <Scripts>
       <OnLoad>
+        table.insert(UISpecialFrames, this:GetName())
         this:SetBackdropColor(0.91, 0.71, 0.11, 0.95)
         this:SetBackdropBorderColor(0.91, 0.91, 0.91, 0.8)
       </OnLoad>
@@ -470,7 +471,7 @@
       </OnLoad>
     </Scripts>
   </Frame>
-  <Frame name="AchievementsPlusAchievementsFrame" frameStrata="BACKGROUND" enableMouse="true" parent="AchievementsPlusFrame" hidden="false">
+  <Frame name="AchievementsPlusSummaryFrame" frameStrata="BACKGROUND" enableMouse="true" parent="AchievementsPlusFrame" hidden="false">
     <Size x="500" y="484"/>
     <Anchors>
       <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="AchievementsPlusFrame">
@@ -599,6 +600,7 @@
             </Anchors>
             <Scripts>
               <OnShow>
+                getfenv(0)[this:GetName()]:SetValue(0)
                 getfenv(0)[this:GetName().."_Text"]:SetText("0 / 0")
                 getfenv(0)[this:GetName().."_Name"]:SetText(_AP_MainWindow.i18n("Achievements Earned"))
               </OnShow>
@@ -614,6 +616,7 @@
             </Anchors>
             <Scripts>
               <OnShow>
+                getfenv(0)[this:GetName()]:SetValue(0)
                 getfenv(0)[this:GetName().."_Text"]:SetText("0 / 0")
                 getfenv(0)[this:GetName().."_Name"]:SetText(_AP_MainWindow.i18n("Character"))
               </OnShow>
@@ -628,6 +631,7 @@
             </Anchors>
             <Scripts>
               <OnShow>
+                getfenv(0)[this:GetName()]:SetValue(0)
                 getfenv(0)[this:GetName().."_Text"]:SetText("0 / 0")
                 getfenv(0)[this:GetName().."_Name"]:SetText(_AP_MainWindow.i18n("Quests"))
               </OnShow>
@@ -643,6 +647,7 @@
             </Anchors>
             <Scripts>
               <OnShow>
+                getfenv(0)[this:GetName()]:SetValue(0)
                 getfenv(0)[this:GetName().."_Text"]:SetText("0 / 0")
                 getfenv(0)[this:GetName().."_Name"]:SetText(_AP_MainWindow.i18n("World Exploration"))
               </OnShow>
@@ -657,6 +662,7 @@
             </Anchors>
             <Scripts>
               <OnShow>
+                getfenv(0)[this:GetName()]:SetValue(0)
                 getfenv(0)[this:GetName().."_Text"]:SetText("0 / 0")
                 getfenv(0)[this:GetName().."_Name"]:SetText(_AP_MainWindow.i18n("Dungeons and Raids"))
               </OnShow>
@@ -672,6 +678,7 @@
             </Anchors>
             <Scripts>
               <OnShow>
+                getfenv(0)[this:GetName()]:SetValue(0)
                 getfenv(0)[this:GetName().."_Text"]:SetText("0 / 0")
                 getfenv(0)[this:GetName().."_Name"]:SetText(_AP_MainWindow.i18n("Player vs Player"))
               </OnShow>
@@ -686,6 +693,7 @@
             </Anchors>
             <Scripts>
               <OnShow>
+                getfenv(0)[this:GetName()]:SetValue(0)
                 getfenv(0)[this:GetName().."_Text"]:SetText("0 / 0")
                 getfenv(0)[this:GetName().."_Name"]:SetText(_AP_MainWindow.i18n("Professions"))
               </OnShow>
@@ -701,6 +709,7 @@
             </Anchors>
             <Scripts>
               <OnShow>
+                getfenv(0)[this:GetName()]:SetValue(0)
                 getfenv(0)[this:GetName().."_Text"]:SetText("0 / 0")
                 getfenv(0)[this:GetName().."_Name"]:SetText(_AP_MainWindow.i18n("Reputation"))
               </OnShow>
@@ -715,6 +724,7 @@
             </Anchors>
             <Scripts>
               <OnShow>
+                getfenv(0)[this:GetName()]:SetValue(0)
                 getfenv(0)[this:GetName().."_Text"]:SetText("0 / 0")
                 getfenv(0)[this:GetName().."_Name"]:SetText(_AP_MainWindow.i18n("World Events"))
               </OnShow>
@@ -726,8 +736,52 @@
     <Scripts>
       <OnLoad>
         this:SetBackdropBorderColor(1, 0.675, 0.125, 0.9);
-        AchievementsPlusAchievementsFrame_RecentHeaderBackgroundText:SetText("Recent Achievements")
-        AchievementsPlusAchievementsFrame_OverviewHeaderBackgroundText:SetText("Progress Overview")
+        getfenv(0)[this:GetName().."_RecentHeaderBackgroundText"]:SetText("Recent Achievements")
+        getfenv(0)[this:GetName().."_OverviewHeaderBackgroundText"]:SetText("Progress Overview")
+      </OnLoad>
+    </Scripts>
+  </Frame>
+  <Frame name="AchievementsPlusAchievementsFrame" frameStrata="BACKGROUND" enableMouse="true" parent="AchievementsPlusFrame" hidden="false">
+    <Size x="500" y="484"/>
+    <Anchors>
+      <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="AchievementsPlusFrame">
+        <Offset x="260" y="-8"/>
+      </Anchor>
+    </Anchors>
+    <Layers>
+      <Layer level="BACKGROUND">
+        <Texture file="Interface\AddOns\AchievementsPlus-Turtle\Images\AchievementFrame\UI-Achievement-Background">
+          <Size x="484" y="468"/>
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset x="8" y="-8"/>
+            </Anchor>
+          </Anchors>
+          <TexCoords left="0.0" right="1" top="0.0" bottom="1"/>
+        </Texture>
+      </Layer>
+    </Layers>
+    <Backdrop edgeFile="Interface\Tooltips\UI-Tooltip-Border">
+      <EdgeSize val="24"/>
+    </Backdrop>
+    <Frames>
+      <Frame name="$parent_Achievements" hidden="false">
+        <Size x="468" y="176"/>
+        <Anchors>
+          <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_RecentHeaderBackground">
+            <Offset x="0" y="18"/>
+          </Anchor>
+        </Anchors>
+        <Backdrop edgeFile="Interface\Tooltips\UI-Tooltip-Border">
+          <EdgeSize val="24"/>
+        </Backdrop>
+        <Frames>
+        </Frames>
+      </Frame>
+    </Frames>
+    <Scripts>
+      <OnLoad>
+        this:SetBackdropBorderColor(1, 0.675, 0.125, 0.9);
       </OnLoad>
     </Scripts>
   </Frame>
